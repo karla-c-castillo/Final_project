@@ -1,0 +1,109 @@
+### DO NOT CHANGE CODE IN THIS BLOCK ###
+import random
+
+# Enemies defined in different dictionaries
+vampire = {"name": "Vampire", "attack":"1d5", "defense": "1d3", "maxhp":50, "curhp":50 }
+goblin = {"name": "Goblin", "attack":"1d3", "defense": "1d1", "maxhp":30, "curhp":30 }
+ghost = {"name": "Ghost", "attack":"1d5", "defense": "1d5", "maxhp":50, "curhp":50 }
+dracula = {"name": "Dracula", "attack":"2d5", "defense": "1d4", "maxhp":200, "curhp":200 }
+
+# A LIST of DICTIONARIES for enemies
+enemies = [vampire, goblin, ghost, dracula]
+
+# Player dictionary
+player = {"name":"", "attack":"2d5", "defense": "1d3", "maxhp":200, "curhp":200}
+###########################################
+# START YOUR CODE BELOW THIS LINE
+###########################################
+
+  # Fill in the rest of this function
+    # NEW INFO: This function calls get_damage() twice, once for player and once for enemy
+
+# What is the player name: Scotty Highlander
+# Scotty Highlander currently has 200 hp
+
+# 1 : Go to Battle
+# 2 : Heal
+# What to do next > 1
+# Scotty Highlander encounters a random vampire. Battle starts
+# Scotty Highlander does 6 damage to vampire
+# vampire does 0 damage to Scotty Highlander
+# Scotty Highlander hp: 200
+# vampire hp: 44
+# Scotty Highlander does 0 damage to vampire
+# vampire does 1 damage to Scotty Highlander
+# Scotty Highlander hp: 199
+# vampire hp: 44
+
+
+#     Function: do_battle(player, enemy)
+# This is the main battle function. Notice that it is called 
+# from main_menu_goto_battle(). In this function, a loop runs 
+# until either the player or enemy is dead. For each battle round, 
+# display the damage done by the player (to the enemy), the damage done 
+# by the enemy (to the player), and the new HP for the player and enemy 
+# after those damages are deducted. If the enemy dies, return True. If 
+# the player dies, return False. 
+
+# On the next page is sample output showing the information printed by 
+# this function. Remember that a vampire starts with 50 HP.
+
+def do_battle(player, enemy):
+
+    enemy_hp = enemy['']
+
+    while(True):
+        print("Damage to enemy: {enemy['d']}",)
+    
+
+def get_damage(attack, defense):
+    # Fill in the rest of this function
+    # NEW INFO: This function calls get_roll() twice, once for the attack roll and once for the defense roll
+
+def get_roll(rollstring):
+    # Fill in the rest of this function
+    # HINT: split() and randint()
+
+# This is a complete function; do not modify
+def main_menu_goto_battle():
+    enemy = enemies[random.randint(0,len(enemies)-1)]
+    if do_battle(player, enemy):
+        print(f"The {enemy['name']} has died, hurray!")
+        enemy['curhp'] = enemy['maxhp']
+        input("Press enter to return home")
+    else:
+        print(f"Oh no! {player['name']}")
+
+    return
+
+# This is a complete function; do not modify
+def main_menu_heal():
+    print(f"The player takes rest under a healing fountain. HP restored!")
+    player['curhp'] = player['maxhp']
+    input("Press enter to return home")
+    return
+
+# This is a complete function; do not modify
+def main_menu():
+    # Player dies if player HP reaches 0 or less
+    while player['curhp'] > 0:
+        # Display menu
+        print(f"{player['name']} currently has {player['curhp']} hp\n")
+        print("1 : Go to Battle")
+        print("2 : Heal")
+
+        x = input("What to do next > ")
+        # Get input from player
+        if x =="1":
+            main_menu_goto_battle()
+        elif x=="2":
+            main_menu_heal()
+        else:
+            print("No such action")
+
+    print("Player is dead!")
+
+###### DO NOT CHANGE THIS CODE #########
+player['name'] = input("What is the player's name? ")
+main_menu()
+########################################
