@@ -15,54 +15,76 @@ player = {"name":"", "attack":"2d5", "defense": "1d3", "maxhp":200, "curhp":200}
 ###########################################
 # START YOUR CODE BELOW THIS LINE
 ###########################################
+# NAME: KARLA CASTILLO CARRILLO
+# Project Python - Final
+# Professor Rich
+# MGT 205 Information Systems
+##############################
 
-  # Fill in the rest of this function
-    # NEW INFO: This function calls get_damage() twice, once for player and once for enemy
-
-# What is the player name: Scotty Highlander
-# Scotty Highlander currently has 200 hp
-
-# 1 : Go to Battle
-# 2 : Heal
-# What to do next > 1
-# Scotty Highlander encounters a random vampire. Battle starts
-# Scotty Highlander does 6 damage to vampire
-# vampire does 0 damage to Scotty Highlander
-# Scotty Highlander hp: 200
-# vampire hp: 44
-# Scotty Highlander does 0 damage to vampire
-# vampire does 1 damage to Scotty Highlander
-# Scotty Highlander hp: 199
-# vampire hp: 44
-
-
-#     Function: do_battle(player, enemy)
-# This is the main battle function. Notice that it is called 
-# from main_menu_goto_battle(). In this function, a loop runs 
-# until either the player or enemy is dead. For each battle round, 
-# display the damage done by the player (to the enemy), the damage done 
-# by the enemy (to the player), and the new HP for the player and enemy 
-# after those damages are deducted. If the enemy dies, return True. If 
-# the player dies, return False. 
-
-# On the next page is sample output showing the information printed by 
-# this function. Remember that a vampire starts with 50 HP.
+# Global variable value trackers
+total_enemy = 0
+total_player = 0
 
 def do_battle(player, enemy):
+# print enemey and player
+  print(player['name']," encounters a random",enemy['name'])
 
-    enemy_hp = enemy['']
+  # store player name into player 1 ..etc
+  player_one = player['name']
+  player_two = enemy['name']
 
-    while(True):
-        print("Damage to enemy: {enemy['d']}",)
+  # store their current hitpoints 200 hp for player
+  player_one_health =  player['curhp']
+  player_two_health = enemy['curhp']
+
+  # Loop until someone dies.....
+  while(True):
+    # roll for both players
+    player_turn_attack = get_roll(player['attack'])
+    player_turn_defense = get_roll(player['defense'])
+
+    enemy_turn_attack = get_roll(enemy['attack'])
+    enemy_turn_defense = get_roll(enemy['defense'])
+
+    total_player = get_damage(player_turn_attack,player_turn_defense) # ex '3d5'-'1d5' = total damage
+    total_enemy = get_damage(enemy_turn_attack,enemy_turn_defense) # 
+
+    print(f"{player_one},does {total_enemy} damage to {player_two}") # string interpolation for player and dmg
+    print(f"{player_two},does {total_player} damage to {player_one}") # string interpolation for enemy and dmg
+
+    player_one_health -= total_player # current hit = current hit - get dmg
+    player_two_health -= total_enemy # ditto but for enemey
+
+    # print only if health is greater than or equal to 0 so no non negative numbers
+    if(player_one_health >= 0):
+      print(player['name'],"hp: ",player_one_health)
     
+    if(player_two_health >= 0):
+      print(enemy['name'],"hp: ",player_two_health)
+
+   # If enemy health is <= 0 ever, return true, others return false for player
+    if(player_two_health <= 0):
+      return True
+    if(player_one_health <= 0 ):
+      return False
 
 def get_damage(attack, defense):
-    # Fill in the rest of this function
-    # NEW INFO: This function calls get_roll() twice, once for the attack roll and once for the defense roll
+  damage = 0
+  if(defense > attack):
+    return damage
+  else:
+    return int(attack)-int(defense)
 
 def get_roll(rollstring):
-    # Fill in the rest of this function
-    # HINT: split() and randint()
+  # parsing '3d5' for example i = rollstring[0] = 3
+  i = (int(rollstring[0]))
+  j = (int(rollstring[2])-1) # j = rollstring[2] = 5
+  accumulator = 0 # store total
+  start = 0
+  for x in range(start,i): # loop until n = 0 < i = 3
+    accumulator += random.randint(0,j) # Random number 0 <-> j = 5 in ex
+
+  return accumulator # return total = 3d5 so 3 loops between random numbers 0-5 for ex
 
 # This is a complete function; do not modify
 def main_menu_goto_battle():
